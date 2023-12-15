@@ -14,10 +14,11 @@ import com.D121211077.kapanMatahari.MyApplication
 import com.D121211077.kapanMatahari.data.models.SunInfo
 import com.D121211077.kapanMatahari.data.repository.TimeRepository
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.IOException
 
 sealed interface MainUiState {
-    data class Success(val time: SunInfo) : MainUiState
+    data class Success(val time: SunInfo?) : MainUiState
     object Error : MainUiState
     object Loading : MainUiState
 }
@@ -37,7 +38,8 @@ class MainViewModel(private val timeRepository: TimeRepository): ViewModel() {
             mainUiState = MainUiState.Success(result.results)
             Log.d("MainViewMode", "getTime success: ${result.results}")
         } catch (e: IOException) {
-            Log.d("MainViewMode", "getTime error: ${e.message}")
+            mainUiState = MainUiState.Error
+        } catch (e: HttpException) {
             mainUiState = MainUiState.Error
         }
     }

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GetTimeResponse(
     @SerialName("results")
-    val results: SunInfo,
+    val results: SunInfo?,
     @SerialName("status")
     val status: String?,
     @SerialName("tzId")

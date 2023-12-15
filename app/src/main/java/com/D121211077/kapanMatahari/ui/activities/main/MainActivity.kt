@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = {
                             TopAppBar(
-                                title = { Text(text = "List Option") },
+                                title = { Text(text = "Kapan Matahari?") },
                             )
                         },
                         floatingActionButton = {
@@ -51,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Column(modifier = Modifier.padding(it)) {
                             val mainViewModel: MainViewModel = viewModel(factory = MainViewModel.Factory)
-                            ListNewsScreen(mainViewModel.mainUiState)
+                            ListTimeScreen(mainViewModel.mainUiState)
                         }
                     }
                 }
@@ -60,7 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun ListNewsScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
+    private fun ListTimeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
         when(mainUiState) {
             is MainUiState.Success -> ListTime(mainUiState.time)
             is MainUiState.Error -> ErrorText()
@@ -79,20 +78,32 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun ListTime(time: SunInfo, modifier: Modifier = Modifier) {
-        TimeCard(time = time)
-    }
+    fun ListTime(sunInfo: SunInfo?) {
+        sunInfo?.let {
+            Button(onClick = {
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("sunrise", it.sunrise)
+                startActivity(intent)
+            }) {
+                Text("Show Sunrise Details")
+            }
 
-    @Composable
-    private fun TimeCard(time: SunInfo, modifier: Modifier = Modifier) {
-        Card(modifier = Modifier.clickable {
-            val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            intent.putExtra("TIMES", time)
-            startActivity(intent)
-        }) {
-            Column {
-                Text(text = time.sunrise ?: "Ini Sunrise")
+            Button(onClick = {
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("sunset", it.sunset)
+                startActivity(intent)
+            }) {
+                Text("Show Sunset Details")
+            }
+
+            Button(onClick = {
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("solarNoon", it.solarNoon)
+                startActivity(intent)
+            }) {
+                Text("Show Solar Noon Details")
             }
         }
     }
+
 }
