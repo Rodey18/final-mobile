@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-data class Article(
+data class SunInfo(
     @SerialName("sunrise")
     val sunrise: String?,
     @SerialName("sunset")
