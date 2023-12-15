@@ -17,7 +17,7 @@ class DetailActivity : ComponentActivity() {
     private var sunInfoValue: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sunInfoValue = intent.getStringExtra("sunInfoValue")
+        sunInfoValue = intent.getStringExtra("results")
 
         setContent {
             D121211077KapanMatahariTheme {

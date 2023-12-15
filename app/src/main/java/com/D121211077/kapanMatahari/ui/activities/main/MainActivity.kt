@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
         sunInfo?.let {
             Button(onClick = {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("sunrise", it.sunrise)
+                intent.putExtra("results", it.sunrise)
                 startActivity(intent)
             }) {
                 Text("Show Sunrise Details")
@@ -90,7 +90,7 @@ class MainActivity : ComponentActivity() {
 
             Button(onClick = {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("sunset", it.sunset)
+                intent.putExtra("results", it.sunrise)
                 startActivity(intent)
             }) {
                 Text("Show Sunset Details")
@@ -98,7 +98,7 @@ class MainActivity : ComponentActivity() {
 
             Button(onClick = {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("solarNoon", it.solarNoon)
+                intent.putExtra("results", it.sunrise)
                 startActivity(intent)
             }) {
                 Text("Show Solar Noon Details")
